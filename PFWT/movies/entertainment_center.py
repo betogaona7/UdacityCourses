@@ -37,6 +37,9 @@ hunger_games = media.Movie("Hunger Games",
 	"https://en.wikipedia.org/wiki/File:HungerGamesPoster.jpg",
 	"https://www.youtube.com/watch?v=mfmrPu43DF8")
 
-movies = [toy_story,avatar,my_name_is_khan,school_of_rock,ratatouille,midnight_in_paris,hunger_games]
-
-fresh_tomatoes.open_movies_page(movies)
+#movies = [toy_story,avatar,my_name_is_khan,school_of_rock,ratatouille,midnight_in_paris,hunger_games]
+#print(media.Movie.VALID_RATINGS)
+print(media.Movie.__doc__)
+print(media.Movie.__name__)
+print(media.Movie.__module__)
+#fresh_tomatoes.open_movies_page(movies)
