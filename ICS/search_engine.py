@@ -34,21 +34,50 @@ def get_all_links(page):
 			break
 	return links
 
+#def crawl_web(seed):
+#	tocrawl = [seed]
+#	crawled = []
+#	while tocrawl:
+#		page = tocrawl.pop()
+#		if(page not in crawled):
+#			union(tocrawl,get_all_links(get_page(page)))
+#			crawled.append(page)
+#	return crawled
+
+############################################################################################################################################
+""" AMake a index """
+def add_to_index(index,keyword,url):
+    for element in index:
+        if keyword in element[0]:
+            element[1].append(url)
+            return index
+    index.append([keyword,[url]])
+    return index
+
+def add_page_to_index(index,url,content):
+    words = content.split()
+    for word in words:
+        add_to_index(index,word,url)
+    return None
+        
+def lookup(index, word):
+	for element in index:
+		if keyword in element[0]:
+			return element[1]
+	return []
+
 def crawl_web(seed):
 	tocrawl = [seed]
 	crawled = []
+	index = []
 	while tocrawl:
 		page = tocrawl.pop()
 		if(page not in crawled):
-			union(tocrawl,get_all_links(get_page(page)))
+			content = get_page(page)
+			add_page_to_index(index, page, content)
+			union(tocrawl,get_all_links(content))
 			crawled.append(page)
-	return crawled
+	return index
 
 
-
-#print(get_page("http://xkcd.com/353/")) # Test get_page
-#print(get_next_target('<li><a href="http://blag.xkcd.com">Blag</a></li>')) #Test get_next_target
-#get_all_links('<li><a href="http://blag.xkcd.com">Blag</a></li><li><a href="http://store.xkcd.com/">Store</a></li>') # Test print_all_links
-#print(get_all_links(get_page('http://xkcd.com/353/')))
 print(crawl_web("https://www.udacity.com/cs101x/index.html?_ga=1.161011645.1417601336.1463164125"))
-############################################################################################################################################
