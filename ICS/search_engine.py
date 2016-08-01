@@ -47,11 +47,10 @@ def get_all_links(page):
 ############################################################################################################################################
 """ AMake a index """
 def add_to_index(index,keyword,url):
-    for element in index:
-        if keyword in element[0]:
-            element[1].append(url)
-            return index
-    index.append([keyword,[url]])
+    if keyword in index:
+    	index[keyword].append(url)
+    else:
+    	index[keyword] = [url]
     return index
 
 def add_page_to_index(index,url,content):
@@ -60,16 +59,16 @@ def add_page_to_index(index,url,content):
         add_to_index(index,word,url)
     return None
         
-def lookup(index, word):
-	for element in index:
-		if keyword in element[0]:
-			return element[1]
-	return []
+def lookup(index, keyword):
+	if keyword in index:
+		return index[keyword]
+	else:
+		return None
 
 def crawl_web(seed):
 	tocrawl = [seed]
 	crawled = []
-	index = []
+	index = {}
 	while tocrawl:
 		page = tocrawl.pop()
 		if(page not in crawled):
@@ -79,5 +78,7 @@ def crawl_web(seed):
 			crawled.append(page)
 	return index
 
-
+#print all index
 print(crawl_web("https://www.udacity.com/cs101x/index.html?_ga=1.161011645.1417601336.1463164125"))
+#print all pages with keyword "learning"
+print("\n" + str(lookup(crawl_web("https://www.udacity.com/cs101x/index.html?_ga=1.161011645.1417601336.1463164125"),"learning")))
