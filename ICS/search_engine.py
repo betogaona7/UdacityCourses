@@ -1,5 +1,5 @@
 ############################################################################################################################################
-"""Web crawler, for any seed page, it will find all the pages that can 
+""" Web crawler, for any seed page, it will find all the pages that can 
 be reached from that page, and return them in a list"""
 
 def get_page(url):
@@ -34,6 +34,7 @@ def get_all_links(page):
 			break
 	return links
 
+#Produces a list
 #def crawl_web(seed):
 #	tocrawl = [seed]
 #	crawled = []
@@ -45,7 +46,7 @@ def get_all_links(page):
 #	return crawled
 
 ############################################################################################################################################
-""" AMake a index """
+""" Make a index """
 def add_to_index(index,keyword,url):
     if keyword in index:
     	index[keyword].append(url)
@@ -65,20 +66,45 @@ def lookup(index, keyword):
 	else:
 		return None
 
-def crawl_web(seed):
-	tocrawl = [seed]
-	crawled = []
-	index = {}
-	while tocrawl:
-		page = tocrawl.pop()
-		if(page not in crawled):
-			content = get_page(page)
-			add_page_to_index(index, page, content)
-			union(tocrawl,get_all_links(content))
-			crawled.append(page)
-	return index
+# Produces a dictionary
+#def crawl_web(seed):
+#	tocrawl = [seed]
+#	crawled = []
+#	index = {}
+#	while tocrawl:
+#		page = tocrawl.pop()
+#		if(page not in crawled):
+#			content = get_page(page)
+#			add_page_to_index(index, page, content)
+#			union(tocrawl,get_all_links(content))
+#			crawled.append(page)
+#	return index
 
 #print all index
 print(crawl_web("https://www.udacity.com/cs101x/index.html?_ga=1.161011645.1417601336.1463164125"))
 #print all pages with keyword "learning"
 print("\n" + str(lookup(crawl_web("https://www.udacity.com/cs101x/index.html?_ga=1.161011645.1417601336.1463164125"),"learning")))
+
+############################################################################################################################################
+"""Recusive definition, how to use a recursive definition of popularity to make the search engine 
+repond with the best page for a given query. Implementing algorithm of Google."""
+
+
+#produces a index and a graph
+#Graph, is the structure that gives a maping from
+#each node to the pages that it links to.
+def crawl_web(seed):
+	tocrawl = [seed]
+	crawled = []
+	index = {}
+	graph = {}
+	while tocrawl:
+		page = tocrawl.pop()
+		if(page not in crawled):
+			content = get_page(page)
+			add_page_to_index(index, page, content)
+			outlinks = get_all_links(content)
+			graph[page] = outlinks
+			union(tocrawl,outlinks)
+			crawled.append(page)
+	return index, graph
