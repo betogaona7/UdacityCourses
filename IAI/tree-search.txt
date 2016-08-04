@@ -1,0 +1,23 @@
+
+""" Function for solving problems  """
+
+- Initial State - s
+- Actions(s) - {a1, a2, a3, ... , an}
+- Result(s, a) - s'
+- Goaltest(s) - True/False
+- Pathcost(s-a-> s-a->)  - n 
+- Stepcost(s, a, s') - n
+
+#Tree-Search
+
+function TREE-SEARCH(problem):
+	frontier = {[initial]}    # initializing the frontier to be the path consisting of only the initial states 
+	loop:
+		if frontier is empty: # First checks to see do we still have anything left in the frontier?
+			return Fail		  # If not we fail, there can be no solution
+		path = remove_choice(frontier) # If we do have something, then we make a choice
+		s = path.end  		  # We find the state which is at the end of the path 
+		if s is a goal:		  # If that state's a go then we're done, We found a path to the goal 
+			return path 
+		for a in actions:	  # Look at all actions from that state
+			add [path + a -> result(s,a)] to frontier   # We add to the path the actions and the result of that state
