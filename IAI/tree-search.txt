@@ -20,4 +20,13 @@ function TREE-SEARCH(problem):
 		if s is a goal:		  # If that state's a go then we're done, We found a path to the goal 
 			return path 
 		for a in actions:	  # Look at all actions from that state
-			add [path + a -> result(s,a)] to frontier   # We add to the path the actions and the result of that state
+			add [path + a -> result(s,a)] to frontier   # We add to the path the actions and the result of that state """
+
+
+""" works when: 
+ - Fully observable 
+ - Known: We have to know the set of avaliable actions to us 
+ - Discrete: There must be a finite number of actions to chose from 
+ - Deterministic: We have to know the result of taking an action
+ - Static: There must be nothing else in the world that can change the world except our own actions
+""" 
