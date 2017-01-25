@@ -1,3 +1,5 @@
+import math as m
+
 class Vector(object):
 	def __init__(self, coordinates):
 		try:
@@ -28,8 +30,32 @@ class Vector(object):
 	def times_scalar(self, c):
 		new_coordenates = [c*x for x in self.coordinates]
 		return Vector(new_coordenates)
+	
+	def magnitude(self):
+		coordinates_squared =[x**2 for x in self.coordinates]
+		return m.sqrt(sum(coordinates_squared))
+
+	def direction(self):
+		try:
+			magnitude = self.magnitude()
+			return self.times_scalar(1./magnitude)
+		except ZeroDivisionErro:
+			raise Exception("Cannot normalize the zero vector")
 
 
 
-my_vector = Vector([1,2,3])
-print(my_vector)
+v = Vector([8.218, -9.341])
+w = Vector([-1.129,2.111])
+
+#print(v.plus(w))
+
+v = Vector([1.671, -1.012, -0.138])
+c = 7.41
+
+#print(v.times_scalar(c))
+
+v = Vector([8.813, -1.331,-6.247])
+print(v.magnitude())
+
+v = Vector([5.581,-2.136])
+print(v.direction())
