@@ -93,8 +93,31 @@ class Vector(object):
 		except Exception as e:
 			raise e
 
+	def cross(self, v):
+		try:
+			x_1, y_1, z_1 = self.coordinates
+			x_2, y_2, z_2 = v.coordinates
+			new_coordenates = [y_1*z_2 - y_2*z_1,
+							   -(x_1*z_2 - x_2*z_1),
+							   x_1*y_2 - x_2*y_1]
+			return Vector(new_coordenates)
+		except ValueError as e:
+			msg = str(e)
+			if msg == "need more than 2 values to unpack":
+				self_embedded_in_R3 = Vector(self.coordinates + ('0',))
+				v_embedded_in_R3 = Vector(v.coordinates + ('0',))
+				return self_embedded_in_R3.cross(v_embedded_in_R3)
+			elif msg == "too many values to unpack" or msg == "need more than 1 value to unpack":
+				raise Exception("Only defined in two and three dimensions.")
+			else:
+				raise e
 
+	def area_of_triangle_with(self, v):
+		return self.area_of_parallelogram_with(v)/2
 
+	def area_of_parallelogram_with(self,v):
+		cross_product = self.cross(v)
+		return cross_product.magnitude()
 
 v = Vector([8.218, -9.341])
 w = Vector([-1.129,2.111])
@@ -134,20 +157,32 @@ w = Vector([-1.821,1.072,-2.94])
 #print("Parallel: ", v.is_parallel_to(w))
 
 
-print("#1")
+#print("#1")
 v = Vector([3.039, 1.879])
 w = Vector([0.825, 2.036])
-print(v.component_parallel_to(w))
+#print(v.component_parallel_to(w))
 
-print("#2")
+#print("#2")
 v = Vector([-9.88, -3.264, -8.159])
 w = Vector([-2.155, -9.353, -9.473])
-print(v.component_orthogonal_to(w))
+#print(v.component_orthogonal_to(w))
 
-print("#3")
+#print("#3")
 v = Vector([3.009, -6.172, 3.692, -2.51])
 w = Vector([6.404, -9.144, 2.759, 8.718])
 vpar = v.component_parallel_to(w)
 vort = v.component_orthogonal_to(w)
-print("Parallel component ", vpar)
-print("Orthogonal component ", vort)
+#print("Parallel component ", vpar)
+#print("Orthogonal component ", vort)
+
+v = Vector([8.462,7.893,-8.187])
+w = Vector([6.984, -5.975,4.778])
+print(v.cross(w))
+
+v = Vector([-8.987,-9.838,5.031])
+w = Vector([-4.268,-1.861,-8.866])
+print(v.area_of_parallelogram_with(w))
+
+v = Vector([1.5, 9.547, 3.691])
+w = Vector([-6.007, 0.124, 5.772])
+print(v.area_of_triangle_with(w))
