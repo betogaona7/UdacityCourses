@@ -24,6 +24,11 @@ class Vector(object):
 	def __eq__ (self, v):
 		return self.coordinates == v.coordinates
 
+	def __getitem__(self, i):
+		return self.coordinates[i]
+
+	def __iter__(self):
+		return self.coordinates.__iter__()
 
 	def plus(self, v):
 		new_coordenates = [x+y for x,y in zip(self.coordinates, v.coordinates)]
@@ -177,12 +182,12 @@ vort = v.component_orthogonal_to(w)
 
 v = Vector([8.462,7.893,-8.187])
 w = Vector([6.984, -5.975,4.778])
-print(v.cross(w))
+#print(v.cross(w))
 
 v = Vector([-8.987,-9.838,5.031])
 w = Vector([-4.268,-1.861,-8.866])
-print(v.area_of_parallelogram_with(w))
+#print(v.area_of_parallelogram_with(w))
 
 v = Vector([1.5, 9.547, 3.691])
 w = Vector([-6.007, 0.124, 5.772])
-print(v.area_of_triangle_with(w))
+#print(v.area_of_triangle_with(w))
